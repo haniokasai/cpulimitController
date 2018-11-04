@@ -33,5 +33,13 @@ public class Parse {
         return null;
     }
 
+    /**
+     * @param pid process id
+     * @param percent percent (if you have 4 core cpu, maximum is 400)
+     */
+    public static void setlimitCPU(int pid,int percent){
+
+    }
+
 
 }

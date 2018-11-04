@@ -32,35 +32,3 @@ public class ExecCommand {
 
 
 }
-
-class OutputLogger extends Thread {
-    private final InputStream is;
-    private final Process pr;
-    public ArrayList<String> outputlines;
-
-    public OutputLogger(InputStream is, Process pr) {
-        this.is = is;
-        this.pr = pr;
-        outputlines = new ArrayList<>();
-    }
-
-    @Override
-    public void run() {
-        try {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
-                for (; ; ) {
-                    String line = br.readLine();
-                    if (line == null) break;
-                    //System.out.println("[" + title + "]" + line);
-                    try {
-                        outputlines.add(line);
-                    } catch (NullPointerException e) {
-                        if (Main.debug) e.printStackTrace();
-                    }
-                }
-            }
-        } catch (IOException e) {
-            if (Main.debug) e.printStackTrace();
-        }
-    }
-}
