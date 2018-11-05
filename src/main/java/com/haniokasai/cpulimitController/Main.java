@@ -10,13 +10,17 @@ public class Main {
     public static void main(String args[]) {
         System.out.println("cpulimit:"+String.valueOf(iscpulimitEnable())+" version:"+String.valueOf(getcpulimitVersion()));
         switch (args.length){
-            case 3:
-                debug=true;
+            case 0:
+            case 1:
+                System.out.println("pid limit <debug>");
+                break;
             case 2:
+                debug=false;
                 execCpulimit(Integer.valueOf(args[0]),Integer.valueOf(args[1]));
             break;
             default:
-                System.out.println("pid limit <debug>");
+                debug=true;
+                execCpulimit(Integer.valueOf(args[0]),Integer.valueOf(args[1]));
                 break;
         }
     }

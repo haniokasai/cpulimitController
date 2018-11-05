@@ -33,7 +33,7 @@ public class ExecCommand {
     public static void execCpulimit(int pid,int limit){
         CpulimitThread cp = new CpulimitThread(pid,limit);
         cp.start();
-        while (cp.process.isAlive()){
+        while (!cp.isdead){
 
         }
     }

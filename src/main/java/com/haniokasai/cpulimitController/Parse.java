@@ -8,7 +8,6 @@ import java.util.List;
 public class Parse {
     public static boolean iscpulimitEnable(){
         final ArrayList <String> commandoutput = new ExecCommand().execInstantCommand(new String[]{"cpulimit", "-h"});
-        if(commandoutput == null)return false;
         /*
         CPUlimit version 2.4
         Usage: cpulimit TARGET [OPTIONS...] [-- PROGRAM]

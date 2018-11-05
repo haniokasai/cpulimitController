@@ -35,8 +35,6 @@ public class CpulimitThread extends Thread{
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
                 while (process.isAlive()) {
                     String line = br.readLine();
-                    if (line == null) break;
-                    //System.out.println("[" + title + "]" + line);
                     try {
 
                         if(Main.debug)System.out.println(line);
