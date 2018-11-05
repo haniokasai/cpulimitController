@@ -1,9 +1,9 @@
 package com.haniokasai.cpulimitController;
 
 
-import static com.haniokasai.cpulimitController.ExecCommand.execCpulimit;
 import static com.haniokasai.cpulimitController.Parse.getcpulimitVersion;
 import static com.haniokasai.cpulimitController.Parse.iscpulimitEnable;
+import static com.haniokasai.cpulimitController.Parse.setlimitCPU;
 
 public class Main {
     public static boolean debug = false;
@@ -16,11 +16,11 @@ public class Main {
                 break;
             case 2:
                 debug=false;
-                execCpulimit(Integer.valueOf(args[0]),Integer.valueOf(args[1]));
+                setlimitCPU(Integer.valueOf(args[0]),Integer.valueOf(args[1]));
             break;
             default:
                 debug=true;
-                execCpulimit(Integer.valueOf(args[0]),Integer.valueOf(args[1]));
+                setlimitCPU(Integer.valueOf(args[0]),Integer.valueOf(args[1]));
                 break;
         }
     }
