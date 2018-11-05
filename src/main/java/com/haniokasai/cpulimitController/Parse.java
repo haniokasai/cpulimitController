@@ -54,8 +54,8 @@ public class Parse {
 
         try {
             Process process = builder.start();
-            while(process.isAlive()){}
-        } catch (IOException e) {
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
