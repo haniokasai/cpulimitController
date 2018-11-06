@@ -20,7 +20,12 @@ public class ExecCommand {
 
             OutputLogger ol = new OutputLogger(is, process);
             ol.start();
-            while(process.isAlive()){}
+            try {
+                process.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return null;
+            }
             if(Main.debug) System.out.println(ol.outputlines);
             return ol.outputlines;
         } catch (IOException e) {
