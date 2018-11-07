@@ -4,9 +4,12 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class CpulimitThread extends Thread{
+
     private InputStream is;
     private final int limit;
     private final int pid;
+    private final String[] cmd;
+
     public  Process process;
     public ArrayList<String> outputlines;
     public boolean isdetected = false;
@@ -15,9 +18,10 @@ public class CpulimitThread extends Thread{
 
 
     //cpulimit --pid=12728  --monitor-forks  --limit=10
-    public CpulimitThread(int pid, int limit) {
+    public CpulimitThread(int pid, int limit, String[] cmd) {
         this.pid = pid;
         this.limit = limit;
+        this.cmd = cmd;
         outputlines = new ArrayList<>();
 
     }
@@ -25,7 +29,6 @@ public class CpulimitThread extends Thread{
     @Override
     public void run() {
         try {
-            String[] cmd = (new String[]{"cpulimit","--verbose","--lazy","--pid=" + pid, "--limit=" + limit, "--monitor-forks"});
             ProcessBuilder builder = new ProcessBuilder(cmd);
             builder.redirectErrorStream(true);
 
