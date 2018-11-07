@@ -15,7 +15,7 @@ public class cpulimittest {
             // "sort data.txt"を、子プロセスとして実行
             // sortは、テキストをソートするコマンド
             // data.txtは、javaプロセスのカレントディレクトリ上のテキストファイル
-            Process p = Runtime.getRuntime().exec("cpulimit -p 8162 -l 6 -v");
+            Process p = Runtime.getRuntime().exec("cpulimit -p 12820 -l 6 -v");
 
             // 子プロセスの標準出力および標準エラー出力を入力するスレッドを起動
             new StreamThread(p.getInputStream(), "stdout.txt").start();
@@ -54,6 +54,8 @@ class StreamThread extends Thread {
         try {
             while ((size = in.read(buf, 0, BUF_SIZE)) != -1) {
                 out.write(buf, 0, size);
+                out.flush();
+                System.out.println(new String(buf, "UTF-8"));
             }
         } catch (IOException ex) {
             ex.printStackTrace();
