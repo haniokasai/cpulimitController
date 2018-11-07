@@ -36,40 +36,52 @@ public class CpulimitThread extends Thread{
                 int i = 0;
                 i++;
                 System.out.println(i);
-                while (process.isAlive()) {
-                    String line = br.readLine();
+                while (process.isAlive()&&!isdead) {
+                    String line = null;
+                    try {
+                         line = br.readLine();
+                    }catch (IOException e){
+                        noprocessfound = true;
+                        isdead = true;
+                    }
                     i++;
                     System.out.println(i);
-                    try {
+                    if(line!=null) {
+                        try {
 
-                        if(Main.debug)System.out.println(line);
+                            if (Main.debug) System.out.println(line);
 
-                        outputlines.add(line);
-                        int len = outputlines.size();
-                        while (len > 150) {
-                            outputlines.remove(0);
-                            --len;
+                            outputlines.add(line);
+                            int len = outputlines.size();
+                            while (len > 150) {
+                                outputlines.remove(0);
+                                --len;
+                            }
+
+                            //matches
+                            if (line.matches(".*" + "detected" + ".*")) {
+                                isdetected = true;
+                                System.out.println("[detected]");
+                            }
+
+                            //matches
+                            if (line.matches(".*" + "No process found" + ".*")) {
+                                noprocessfound = true;
+                                System.out.println("[No process found]");
+                                process.destroy();
+                            }
+
+                            //matches
+                            if (line.matches(".*" + "dead!" + ".*")) {
+                                isdead = true;
+                                System.out.println("[dead!]");
+                                process.destroy();
+                            }
+
+
+                        } catch (NullPointerException e) {
+                            if (Main.debug) e.printStackTrace();
                         }
-
-                        //matches
-                        if (line.matches(".*" + "detected" + ".*")) {
-                            isdetected =true;
-                        }
-
-                        //matches
-                        if (line.matches(".*" + "No process found" + ".*")) {
-                            noprocessfound =true;
-                            process.destroy();
-                        }
-
-                        //matches
-                        if (line.matches(".*" + "dead!" + ".*")) {
-                            isdead =true;
-                            process.destroy();
-                        }
-
-                    } catch (NullPointerException e) {
-                        if (Main.debug) e.printStackTrace();
                     }
                 }
             }
