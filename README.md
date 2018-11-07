@@ -1,7 +1,6 @@
 # cpulimitController
 cpulimit frontend on linux
 
-<<<<<<< HEAD
 
 
 ```
@@ -41,7 +40,3 @@ Process 8162 detected
 :~# echo $?
 0
 ```
-
-=======
-todo 出力をparseして捕捉出来てるかスケジュールでチェック
->>>>>>> 0c5b678a01837e871caab71f8624285436817a92
