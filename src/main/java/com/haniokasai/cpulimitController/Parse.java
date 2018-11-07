@@ -8,7 +8,14 @@ import java.util.List;
 
 public class Parse {
     public static boolean iscpulimitEnable(){
-        final ArrayList <String> commandoutput = new ExecCommand().execCommand(new String[]{"cpulimit", "-h"});
+        CpulimitThread cp = new CpulimitThread(new String[]{"cpulimit","-h"});
+        cp.start();
+        try {
+            cp.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        final ArrayList <String> commandoutput = cp.outputlines;
         if(commandoutput == null)return false;
         /*
         CPUlimit version 2.4
@@ -24,7 +31,14 @@ public class Parse {
     }
 
     public static String getcpulimitVersion(){
-        final ArrayList <String> commandoutput = new ExecCommand().execCommand(new String[]{"cpulimit", "-h"});
+        CpulimitThread cp = new CpulimitThread(new String[]{"cpulimit","-h"});
+        cp.start();
+        try {
+            cp.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        final ArrayList <String> commandoutput = cp.outputlines;
         if(commandoutput == null)return null;
         for (String line : commandoutput) {
             if (line.contains("CPUlimit")&&line.contains("version")) {
@@ -39,7 +53,7 @@ public class Parse {
      * @param percent percent (if you have 4 core cpu, maximum is 400)
      */
     public static void setlimitCPU(int pid,int percent){
-        CpulimitThread cp = new CpulimitThread(pid,percent,new String[]{"cpulimit","--lazy","--pid=" + pid, "--limit=" + percent, "--monitor-forks"});
+        CpulimitThread cp = new CpulimitThread(new String[]{"cpulimit","--lazy","--pid=" + pid, "--limit=" + percent, "--monitor-forks"});
         cp.start();
     }
 

@@ -6,8 +6,6 @@ import java.util.ArrayList;
 public class CpulimitThread extends Thread{
 
     private InputStream is;
-    private final int limit;
-    private final int pid;
     private final String[] cmd;
 
     public  Process process;
@@ -15,12 +13,11 @@ public class CpulimitThread extends Thread{
     public boolean isdetected = false;
     public boolean noprocessfound = false;
     public boolean isdead = false;
+    public String msg = null;
 
 
     //cpulimit --pid=12728  --monitor-forks  --limit=10
-    public CpulimitThread(int pid, int limit, String[] cmd) {
-        this.pid = pid;
-        this.limit = limit;
+    public CpulimitThread(String[] cmd) {
         this.cmd = cmd;
         outputlines = new ArrayList<>();
 
@@ -37,8 +34,8 @@ public class CpulimitThread extends Thread{
             is = process.getInputStream();
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
                 int i = 0;
-                i++;
-                System.out.println(i);
+                if(Main.debug)i++;
+                if(Main.debug)System.out.println(i);
                 while (process.isAlive()&&!isdead) {
                     String line = null;
                     try {
@@ -47,8 +44,8 @@ public class CpulimitThread extends Thread{
                         noprocessfound = true;
                         isdead = true;
                     }
-                    i++;
-                    System.out.println(i);
+                    if(Main.debug)i++;
+                    if(Main.debug)System.out.println(i);
                     if(line!=null) {
                         try {
 
@@ -64,12 +61,14 @@ public class CpulimitThread extends Thread{
                             //matches
                             if (line.matches(".*" + "detected" + ".*")) {
                                 isdetected = true;
+                                msg=line;
                                 System.out.println("[detected]");
                             }
 
                             //matches
                             if (line.matches(".*" + "No process found" + ".*")) {
                                 noprocessfound = true;
+                                msg=line;
                                 System.out.println("[No process found]");
                                 process.destroy();
                             }
@@ -77,6 +76,7 @@ public class CpulimitThread extends Thread{
                             //matches
                             if (line.matches(".*" + "dead!" + ".*")) {
                                 isdead = true;
+                                msg=line;
                                 System.out.println("[dead!]");
                                 process.destroy();
                             }
