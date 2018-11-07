@@ -39,25 +39,8 @@ public class Parse {
      * @param percent percent (if you have 4 core cpu, maximum is 400)
      */
     public static void setlimitCPU(int pid,int percent){
-        /*CpulimitThread cp = new CpulimitThread(pid,percent);
+        CpulimitThread cp = new CpulimitThread(pid,percent);
         cp.start();
-        while (!cp.isdead){
-
-        }*/
-        test(pid,percent);
-    }
-
-    public static void test(int pid,int limit){
-        String[] cmd = (new String[]{"cpulimit","--verbose","--lazy","--pid=" + pid, "--limit=" + limit, "--monitor-forks"});
-        ProcessBuilder builder = new ProcessBuilder(cmd);
-        builder.redirectErrorStream(true);
-
-        try {
-            Process process = builder.start();
-            process.waitFor();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 }

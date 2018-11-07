@@ -33,8 +33,13 @@ public class CpulimitThread extends Thread{
             OutputStream stdin = process.getOutputStream();
             is = process.getInputStream();
             try (BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
+                int i = 0;
+                i++;
+                System.out.println(i);
                 while (process.isAlive()) {
                     String line = br.readLine();
+                    i++;
+                    System.out.println(i);
                     try {
 
                         if(Main.debug)System.out.println(line);

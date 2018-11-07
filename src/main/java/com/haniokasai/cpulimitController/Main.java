@@ -4,7 +4,6 @@ package com.haniokasai.cpulimitController;
 import static com.haniokasai.cpulimitController.Parse.getcpulimitVersion;
 import static com.haniokasai.cpulimitController.Parse.iscpulimitEnable;
 import static com.haniokasai.cpulimitController.Parse.setlimitCPU;
-import static com.haniokasai.cpulimitController.cpulimittest.test;
 
 public class Main {
     public static boolean debug = false;
@@ -14,7 +13,6 @@ public class Main {
             case 0:
             case 1:
                 System.out.println("pid limit <debug>");
-                test();
                 break;
             case 2:
                 debug=false;
